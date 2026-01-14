@@ -1,0 +1,20 @@
+## config_routeros_v6
+
+## login winbox
+Connect To : sin3.tunnel.id
+Username :
+Password :
+
+## enable l2tp server, sstp server - ppp
+/interface l2tp-server server set enabled=yes
+/interface sstp-server server set enabled=yes
+
+## set ip service
+/ip service set api port=xxxx
+/ip service set winbox port=xxxx
+
+## add interface sstp-client
+/interface sstp-client add comment=banyuvpn@tunnel.id connect-to=cloud1.tunnel.id disabled=no name=vpn-remote-sstp-hosting-banyuvpn password=banyuhandikaovpn user=banyuvpn
+
+## add interface l2tp-client
+/interface l2tp-client add comment=banyuvpn@tunnel.id connect-to=sin3.tunnel.id disabled=no name=vpn password=banyuhandikaovpn user=banyuvpn
