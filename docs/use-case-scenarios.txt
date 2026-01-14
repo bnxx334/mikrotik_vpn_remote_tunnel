@@ -1,0 +1,68 @@
+# Use Case Scenarios
+
+This repository provides practical networking solutions for secure remote management of MikroTik devices. Below are real-world scenarios where these configurations can be applied.
+
+---
+
+## 1. **Homelab Administrator Managing Devices from Anywhere**
+
+**Context**:  
+A network enthusiast runs a homelab with 3 MikroTik nodes (including RB941 and CHR on VirtualBox) behind a residential ISP connection (e.g., IndiHome). The ISP uses CGNAT or restricts inbound ports, making direct remote access impossible.
+
+**Solution**:  
+- Use **outbound L2TP/IPsec or SSTP** from the MikroTik to a self-hosted VPS or cloud instance.
+- Alternatively, establish an **outbound WireGuard tunnel to tunnel.id** (as shown in `/wireguard-tunnelid/`).
+- Access Winbox/WebFig securely via private IP over the tunnel—no public exposure.
+
+**Benefits**:  
+✅ No port forwarding required  
+✅ Bypasses CGNAT/firewall restrictions  
+✅ Full control over homelab from mobile or office
+
+---
+
+## 2. **IT Support Technician Providing Remote Assistance**
+
+**Context**:  
+A freelance IT technician needs to troubleshoot client MikroTik routers located in small offices or retail stores with limited IT staff.
+
+**Solution**:  
+- Pre-configure the client’s MikroTik with an **SSTP server** (runs on TCP 443, works behind most firewalls).
+- Share temporary VPN credentials to establish a secure session.
+- Use Winbox over the encrypted tunnel to diagnose routing, firewall, or bandwidth issues.
+
+**Security Note**:  
+- Credentials are rotated after each session.
+- Winbox access is restricted to the VPN subnet only (`192.168.99.0/24`).
+
+---
+
+## 3. **Small Business with Multi-Site Connectivity**
+
+**Context**:  
+A small business has a main office (with MikroTik CHR on VPS) and a branch office (RB941). They need secure inter-site communication and centralized management.
+
+**Solution**:  
+- Set up **IPsec site-to-site tunnel** between VPS and RB941 (`ipsec-tunnel.rsc`).
+- Manage the branch RB941 remotely via the VPS’s internal network.
+- Optionally, expose WebFig through an **NGINX reverse proxy** with HTTPS and basic auth (`nginx-reverse-proxy.conf`).
+
+**Outcome**:  
+🔒 Encrypted traffic between sites  
+🖥️ Centralized monitoring & config backup  
+🌐 No dependency on public IP at branch location
+
+---
+
+## 4. **Portfolio Demonstration for Technical Interviews or Freelance Gigs**
+
+**Context**:  
+A network engineer (like you!) wants to showcase hands-on experience with MikroTik, tunneling, and secure remote access.
+
+**How This Repo Helps**:  
+- Clean, documented `.rsc` configs ready for review.
+- Realistic security practices (firewall rules, service hardening).
+- Multiple tunneling methods (L2TP, SSTP, IPsec) compared in one place.
+- Ready to deploy in lab or production with minor adjustments.
+
+> 💡 Tip: Pair this repo with a live demo video or Grafana/MRTG dashboard for full impact!
